@@ -57,10 +57,8 @@ export default class CardController {
     dS.getDragons(drawDragons)
   }
 
-  newGame(gameData) {
-    debugger
+  newGame() {
     dS.newGame(gameData)
-    console.log(gameData)
   }
 
   selectChamp(id) {
