@@ -1,5 +1,6 @@
 import Champion from "../models/Champion.js";
 import Dragon from "../models/dragon.js";
+import Game from "../models/Game.js"
 
 const championApi = axios.create({
   baseURL: 'https://dragon-duel.herokuapp.com/api/champions',
@@ -16,6 +17,7 @@ const gameApi = axios.create({
   timeout: 3000
 })
 
+let newGame = {}
 let gameId = ''
 
 export default class DuelService {
@@ -44,10 +46,23 @@ export default class DuelService {
       })
   }
 
-  newGame(gameData) {
-    gameApi.post('', gameData)
+  selectChamp(id) {
+    newGame.championId = id
+    console.log(newGame)
+  }
+
+  selectEnemy(id) {
+    newGame.dragonId = id
+    console.log(newGame)
+  }
+
+  start(drawGame) {
+    gameApi.post('', newGame)
       .then(res => {
-        console.log(res)
+        let game = new Game(res.data.game)
+        gameId = game._id
+        drawGame(game)
+        console.log(game)
       })
   }
 

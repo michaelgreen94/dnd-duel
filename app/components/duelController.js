@@ -4,9 +4,11 @@ let dS = new DuelService
 
 const champs = document.getElementById('champs')
 const enemy = document.getElementById('enemy')
+const battle = document.getElementById('battle')
+const select = document.getElementById('select')
 
 function drawChampions(champions) {
-  let template = ""
+  let template = ''
   for (let i = 0; i < champions.length; i++) {
     const champion = champions[i];
     template += `
@@ -25,7 +27,7 @@ function drawChampions(champions) {
 }
 
 function drawDragons(dragons) {
-  let template = ""
+  let template = ''
   for (let i = 0; i < dragons.length; i++) {
     const dragon = dragons[i];
     template += `
@@ -43,13 +45,31 @@ function drawDragons(dragons) {
   enemy.innerHTML = template
 }
 
-
-
-let gameData = {
-  dragonId: '',
-  championId: ''
+function drawGame(game) {
+  select.style.display = "none"
+  let template = `
+  <div class="col">
+      <h2>${game.champion.name}</h2>
+      <h4>${game.champion.race} ${game.champion.class}</h4>
+      <p>HP: ${game.champion.hp}</p>
+      <img src="${game.champion.imgUrl}" alt="">
+  </div>
+  <div class="col">
+  `
+  for (let attack in game.champion.attacks) {
+    template += `
+          <button>${attack}</button>
+      `
+  }
+  template += `
+      <div class="game-dragon col">
+          <h2>${game.dragon.name}</h2>
+          <p>HP: ${game.dragon.currentHP}</p>
+          <img src="${game.dragon.imgUrl}" alt="">
+      </div>
+  `
+  battle.innerHTML = template
 }
-
 
 export default class CardController {
   constructor() {
@@ -57,18 +77,16 @@ export default class CardController {
     dS.getDragons(drawDragons)
   }
 
-  newGame() {
-    dS.newGame(gameData)
-  }
 
   selectChamp(id) {
-    gameData.championId = id
-    console.log(id)
+    dS.selectChamp(id)
   }
 
   selectEnemy(id) {
-    gameData.dragonId = id
-    console.log(id)
+    dS.selectEnemy(id)
   }
 
+  start() {
+    dS.start(drawGame)
+  }
 }

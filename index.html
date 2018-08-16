@@ -13,10 +13,13 @@
 
 <body>
   <div class="container-fluid">
-    <div class="row">
+    <div class="row" id="select">
       <div class="col" id="champs"></div>
-      <button onclick="app.controller.cController.newGame()" class="col btn btn-danger">Play</button>
+      <button onclick="app.controller.cController.start()" class="col btn btn-danger">Play</button>
       <div class="col" id="enemy"></div>
+    </div>
+    <div class="row">
+      <div class="row" id="battle"></div>
     </div>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
